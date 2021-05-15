@@ -5,28 +5,9 @@
  */
 package filesever;
 
-import common.FileInfo;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import gui.*;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
 /**
  *
  * @author Sang

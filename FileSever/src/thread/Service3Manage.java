@@ -6,63 +6,75 @@
 package thread;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
-/**
- *
- * @author Sang
- */
-public class Service3Manage extends Thread{
-    private volatile boolean isRunning = true;
-    private DatagramSocket datagramSocket= null;   
-    private String ip = "127.0.0.1";
-    Random rand = new Random();
-    int ranNum = rand.nextInt(2000)+1000;
-    private int port = ranNum;
-    public String getIp(){
-        return ip;
-    }
-    public int getPort(){
-        return port;
-    }
-    @Override
-    public void run() {
-        try {
-            
-            InetAddress inetAddress = InetAddress.getByName(ip);
-            
-            datagramSocket = new DatagramSocket(port, inetAddress);
-            
-            byte[] buf = new byte[1024];
-            
-            DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length);
-            
-            datagramSocket.receive(datagramPacket);
-            //while (true) {                
-              //  Sevice3 sevice3 = new Sevice3(datagramPacket);
-                //sevice3.start();
-            //}
-            
-            //String str = new String(datagramPacket.getData(), 0, buf.length);
-            //while (isRunning) {                
-              //  str = new String(datagramPacket.getData(), 0, buf.length);
-            //}
-            //System.out.println(str);
-        } catch (IOException ex) {
-            System.out.println("File Sever Disconnect!");
-        }  
-        finally{
-            datagramSocket.close();
-        }
-    }//To change body of generated methods, choose Tools | Templates.
-    public void kill() {
-       datagramSocket.close();
-       isRunning = false;
-   }
+public class Service3Manage extends Thread {
+
+	private int _port;
+
+	public Service3Manage(int port) {
+		this._port = port;
+	}
+
+	@Override
+	public void run() {
+		System.out.print("server is listening" + String.valueOf(this._port));
+		ArrayList<Service3> listConect = new ArrayList<>();
+		DatagramSocket socket = null;
+		try {
+			socket = new DatagramSocket(this._port);
+		} catch (SocketException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		while (true) {
+			String savedFileName = "";
+			int client_port = 0;
+			String client_host_name = "127.0.0.1";
+			int server_port = 6023; // not use but please keep it =)))
+			try {
+				// recieve filename
+				byte[] receiveFileNameChoice = new byte[1024];
+				DatagramPacket receiveFileNameChoicePacket = new DatagramPacket(receiveFileNameChoice,
+						receiveFileNameChoice.length);
+				socket.receive(receiveFileNameChoicePacket);
+
+				String decodedDataUsingUTF82 = null;
+				try {
+					decodedDataUsingUTF82 = new String(receiveFileNameChoice, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+
+				savedFileName = decodedDataUsingUTF82.trim();
+				// recieve port
+				byte[] receivePort = new byte[1024];
+				DatagramPacket receivePortPacket = new DatagramPacket(receivePort, receivePort.length);
+				socket.receive(receivePortPacket);
+
+				try {
+					client_port = Integer.parseInt((new String(receivePort, "UTF-8").trim()));
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Service3 connectThread = new Service3(client_host_name, client_port, savedFileName, server_port);
+			connectThread.start();
+			listConect.add(connectThread);
+		}
+	}
+
+	public void kill() {
+//		socket.close();
+//		isRunning = false;
+	}
+
 }
