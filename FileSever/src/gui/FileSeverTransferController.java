@@ -5,19 +5,12 @@
  */
 package gui;
 
-import com.sun.media.jfxmedia.MetadataParser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import filesever.*;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import thread.*;
@@ -33,8 +26,9 @@ public class FileSeverTransferController implements ActionListener {
     Service3Manage service3Manage;
     String sourcFolder = null;
     public FileSeverTransferController(FileSeverTransferView view, String srcDir) {
-        this.sourcFolder = srcDir;
-        service3Manage = new Service3Manage();
+        System.out.print("thuc run");
+    	this.sourcFolder = srcDir;
+        service3Manage = new Service3Manage(2345);
         service3Manage.start();
         this.view = view;
         view.getBtnAdd().addActionListener(this);
@@ -50,7 +44,7 @@ public class FileSeverTransferController implements ActionListener {
         }
         SocketActions.send("SEVER", dos);
         System.out.println(fileSever.getSocket().getPort());
-        String info = service3Manage.getIp() + "_" + service3Manage.getPort();
+        String info = "127.0.0.1" + "_" + "2345";
         SocketActions.send(info, dos);
         SocketActions.sendFile(srcDir + "/Data/data.txt", oos);
     }

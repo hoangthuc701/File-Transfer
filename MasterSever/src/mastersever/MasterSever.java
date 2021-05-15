@@ -5,6 +5,7 @@
  */
 package mastersever;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -18,11 +19,13 @@ public class MasterSever {
 
     /**
      * @param args the command line arguments
+     * @throws IOException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
+    	ServerSocket masterServer = null;
         try {
-            ServerSocket masterServer = new ServerSocket(1234);
+            masterServer = new ServerSocket(1234);
             System.out.println("Start MasterSever Success!!");
             ArrayList<ConnectThread> listConect = new ArrayList<>();
             while (true) {             
@@ -32,7 +35,10 @@ public class MasterSever {
                 listConect.add(connectThread);
             }
         } catch (Exception e) {
-        }
+        	
+        } finally {
+        	masterServer.close();
+		}
     }
     public static void updateFileSever(ArrayList<ConnectThread> listConect){
         for(ConnectThread connectThread : listConect){
