@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import file.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import thread.*;
 /**
  *
@@ -30,7 +31,9 @@ public class ClientTransferController implements ActionListener{
     private DataOutputStream dos = null;
     private ObjectInputStream ois = null;
     private ObjectOutputStream oos = null;
-    public ClientTransferController(ClientTransferView view){
+    private String srcDir;
+    public ClientTransferController(ClientTransferView view, String srcDir){
+        this.srcDir = srcDir;
         this.view = view;
         view.getBtnExt().addActionListener(this);
         view.getMenuItemInstall().addActionListener(this); 
@@ -44,7 +47,7 @@ public class ClientTransferController implements ActionListener{
             ois = new ObjectInputStream(socket.getInputStream());
             SocketActions.send("CLIENT", dos);
             FileInfo fileInfo = SocketActions.getFile(ois);
-            String des = "data.txt";
+            String des = srcDir + "/Data/data.txt";
             FileActions.write(des, fileInfo);
             view.loadData();
             String line;

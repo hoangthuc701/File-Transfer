@@ -32,8 +32,16 @@ public class FileActions {
     }
     public static void write(String Despath, FileInfo file) throws IOException{
         FileOutputStream fos = null;
+        String userDirectory = new File("").getAbsolutePath();
+        File folderData = new File(userDirectory + "/Data");
+        File folderFiles = new File(userDirectory + "/Data/files");
+        folderData.mkdir();
+        folderFiles.mkdirs();
+        
+        File newFile = new File(Despath);  
+        newFile.createNewFile(); 
         try {
-            fos = new FileOutputStream(Despath);
+            fos = new FileOutputStream(newFile);
             fos.write(file.getDataBytes(), 0, file.getDataBytes().length);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FileInfo.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,10 +73,12 @@ public class FileActions {
         }
     }
     public static void writeAllFile(){
+        String userDirectory = new File("").getAbsolutePath();
+        System.out.println(userDirectory);
         BufferedWriter bw = null;
         try {
-            bw = new BufferedWriter(new FileWriter("data.txt"));
-            File folder = new File("files/");
+            bw = new BufferedWriter(new FileWriter(userDirectory + "/Data/data.txt"));
+            File folder = new File(userDirectory + "/Data/files/");
             File[] listOfFiles = folder.listFiles();
             for (File file : listOfFiles) {
                 if (file.isFile()) {

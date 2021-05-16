@@ -43,7 +43,9 @@ public class ClientTransferView extends JFrame{
     private JButton btnAdd;
     private JButton btnExt;
     private JMenuItem Install = new JMenuItem("Install");
-    public ClientTransferView(){
+    private String srcDir;
+    public ClientTransferView(String srcDir){
+        this.srcDir = srcDir;
         Container = new JPanel();
         Container.setLayout(new BoxLayout(Container, BoxLayout.Y_AXIS));
         JLabel lbTitle = new JLabel("Client");
@@ -65,7 +67,7 @@ public class ClientTransferView extends JFrame{
         model.addColumn("File name");
         model.addColumn("Ip");
         model.addColumn("Port");
-        loadData();
+        //loadData();
         JScrollPane sp = new JScrollPane(jTable);
         
         btnAdd = new JButton("Add");
@@ -104,7 +106,7 @@ public class ClientTransferView extends JFrame{
         return Install;
     }
     public void loadData(){
-        ArrayList<RowTable> rowTables = FileActions.read("data.txt");
+        ArrayList<RowTable> rowTables = FileActions.read(srcDir + "/Data/data.txt");
         model.setRowCount(0);
         for (RowTable rowTable : rowTables) {
             String[] rows = {rowTable.getName(), rowTable.getIp(), rowTable.getPort()};

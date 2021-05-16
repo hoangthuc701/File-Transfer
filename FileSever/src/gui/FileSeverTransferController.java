@@ -52,7 +52,7 @@ public class FileSeverTransferController implements ActionListener {
         System.out.println(fileSever.getSocket().getPort());
         String info = service3Manage.getIp() + "_" + service3Manage.getPort();
         SocketActions.send(info, dos);
-        SocketActions.sendFile(srcDir + "/Data/data.txt", oos);
+        SocketActions.sendFile(sourcFolder + "/Data/data.txt", oos);
     }
  
     @Override
@@ -60,7 +60,7 @@ public class FileSeverTransferController implements ActionListener {
         if (e.getActionCommand().equals(view.getBtnAdd().getActionCommand())) {
             view.addFile();
             SocketActions.send("UPDATE", dos);
-            SocketActions.sendFile("data.txt", oos);
+            SocketActions.sendFile(sourcFolder + "/Data/data.txt", oos);
         }
         else if(e.getActionCommand().equals(view.getBtnExt().getActionCommand())){
             SocketActions.send("QUIT", dos);
@@ -73,7 +73,7 @@ public class FileSeverTransferController implements ActionListener {
         else if(e.getActionCommand().equals(view.getMenuItemDelete().getActionCommand())){
             view.deleteFile();
             SocketActions.send("UPDATE", dos);
-            SocketActions.sendFile("data.txt", oos);
+            SocketActions.sendFile(sourcFolder + "/Data/data.txt", oos);
         }
     }
 }

@@ -32,6 +32,10 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,6 +50,10 @@ public class FileSeverTransferView extends JFrame{
     private JButton btnExt;
     private JMenuItem Delete= new JMenuItem("Delete");
     String sourcFolder = null;
+    JTextField tfIp;
+    JTextField tfPort;
+    JButton btnConnect;
+    JTextArea taLog;
     public FileSeverTransferView(String srcDir){
         this.sourcFolder = srcDir;
         Container = new JPanel();
@@ -54,6 +62,23 @@ public class FileSeverTransferView extends JFrame{
         lbTitle.setFont(new Font("Tahoma", Font.PLAIN, 24));
         JPanel Title = new JPanel();
         Title.add(lbTitle); 
+        
+        tfIp = new JTextField(10);
+        tfPort = new JTextField(10);
+        btnConnect = new JButton("Connect");
+        
+        JPanel jpLayout = new JPanel();
+        JLabel jlIp = new JLabel("IP:");
+        JLabel jlPort = new JLabel("Port:");
+        jpLayout.add(jlIp);
+        jpLayout.add(tfIp);
+        jpLayout.add(jlPort);
+        jpLayout.add(tfPort);
+        jpLayout.add(btnConnect);
+        JPanel jpConnect = new JPanel();
+        jpConnect.setLayout(new BorderLayout());
+        jpConnect.add(jpLayout, BorderLayout.LINE_END);
+        
         // Initializing the JTable
         model = new DefaultTableModel(); 
         jTable = new JTable(model);
@@ -83,13 +108,20 @@ public class FileSeverTransferView extends JFrame{
         Actions.setLayout(new BorderLayout());
         Actions.add(Jp1, BorderLayout.LINE_END);
         
+        Border border = tfIp.getBorder();
+        taLog = new JTextArea(10,20);
+        taLog.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        
+        
         Container.add(Title);
+        Container.add(jpConnect);
         Container.add(sp);
         Container.add(Actions);
+        Container.add(taLog);
         Container.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(Container);
-        setPreferredSize(new Dimension(600, 450));
+        setPreferredSize(new Dimension(450, 450));
         pack();
         setLocationRelativeTo(null);
         setVisible(true);

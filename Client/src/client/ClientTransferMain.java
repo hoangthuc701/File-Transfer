@@ -11,7 +11,10 @@ import gui.*;
  */
 public class ClientTransferMain {
     public static void main(String[] args) {
-        ClientTransferView view = new ClientTransferView();
-        new ClientTransferController(view);
+        String srcDir = ChoseFolderClient.chose();
+        if(!srcDir.equals("")){
+            ClientTransferView view = new ClientTransferView(srcDir);
+            new ClientTransferController(view,srcDir);
+        } 
     }
 }
