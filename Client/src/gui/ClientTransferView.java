@@ -43,7 +43,6 @@ public class ClientTransferView extends JFrame {
 	private JPanel Container;
 	private DefaultTableModel model;
 	private JTable jTable;
-	private JButton btnAdd;
 	private JButton btnExt;
 	private JMenuItem Download = new JMenuItem("Download");
 	private JTextField tfIp;
@@ -98,12 +97,10 @@ public class ClientTransferView extends JFrame {
 		// loadData();
 		JScrollPane sp = new JScrollPane(jTable);
 
-		btnAdd = new JButton("Add");
-		btnAdd.setActionCommand("ADD");
+
 		btnExt = new JButton("Ext");
 		btnExt.setActionCommand("EXT");
 		JPanel Jp1 = new JPanel();
-		Jp1.add(btnAdd);
 		Jp1.add(btnExt);
 
 		JPanel Actions = new JPanel();
@@ -126,10 +123,6 @@ public class ClientTransferView extends JFrame {
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
-	}
-
-	public JButton getBtnAdd() {
-		return btnAdd;
 	}
 
 	public JButton getBtnExt() {
