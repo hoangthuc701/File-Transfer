@@ -38,7 +38,7 @@ public class FileActions {
         folderData.mkdir();
         folderFiles.mkdirs();
         
-        File newFile = new File(Despath);  
+        File newFile = new File(Despath);
         newFile.createNewFile(); 
         try {
             fos = new FileOutputStream(newFile);

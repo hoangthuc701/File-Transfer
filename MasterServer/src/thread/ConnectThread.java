@@ -7,6 +7,8 @@ package thread;
 
 import common.FileInfo;
 import file.FileActions;
+import main.MasterServer;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -53,7 +55,7 @@ public class ConnectThread extends Thread{
                 FileInfo fileInfo = SocketActions.getFile(ois);
                 FileActions.write(des, fileInfo);
                 FileActions.writeAllFile();
-                mastersever.MasterSever.updateFileSever(listConect);
+                MasterServer.updateFileSever(listConect);
                 try {
                     while ((line = dis.readUTF()) != null) {   
                         if (line.equals("QUIT"))
@@ -61,7 +63,7 @@ public class ConnectThread extends Thread{
                             System.out.println("Sever IP:" + socket.getInetAddress().toString() + ", Port:" + socket.getPort() + " Disconnect!");
                             FileActions.delete(userDirectory + "/Data/files/" + info[0] + "_" + info[1] + "$.txt");
                             FileActions.writeAllFile();
-                            mastersever.MasterSever.updateFileSever(listConect);
+                            MasterServer.updateFileSever(listConect);
                             SocketActions.closeStream(oos);
                             SocketActions.closeStream(dos);
                             SocketActions.closeStream(dis);
@@ -73,14 +75,14 @@ public class ConnectThread extends Thread{
                             fileInfo = SocketActions.getFile(ois);
                             FileActions.write(des, fileInfo);
                             FileActions.writeAllFile();
-                            mastersever.MasterSever.updateFileSever(listConect);
+                            MasterServer.updateFileSever(listConect);
                         }
                     }
                 } catch (IOException ex) {
                     System.out.println("Sever IP:" + socket.getInetAddress().toString() + ", Port:" + socket.getPort() + " Disconnect!");
                     FileActions.delete(userDirectory + "/Data/files" + socket.getInetAddress() + "_" + socket.getPort() + "$.txt");
                     FileActions.writeAllFile();
-                    mastersever.MasterSever.updateFileSever(listConect);
+                    MasterServer.updateFileSever(listConect);
                     //fileInfo.deleteFile("files" + socketOfServer.getInetAddress() + "_" + socketOfServer.getPort() + "$.txt");
                 }     
             }
