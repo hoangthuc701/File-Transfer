@@ -98,7 +98,7 @@ public class ClientTransferView extends JFrame {
 		JScrollPane sp = new JScrollPane(jTable);
 
 
-		btnExt = new JButton("Ext");
+		btnExt = new JButton("Exit");
 		btnExt.setActionCommand("EXT");
 		JPanel Jp1 = new JPanel();
 		Jp1.add(btnExt);

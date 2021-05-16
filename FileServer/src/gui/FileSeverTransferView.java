@@ -100,7 +100,7 @@ public class FileSeverTransferView extends JFrame{
         
         btnAdd = new JButton("Add");
         btnAdd.setActionCommand("ADD");
-        btnExt = new JButton("Ext");
+        btnExt = new JButton("Exit");
         btnExt.setActionCommand("EXT");
         JPanel Jp1 = new JPanel();
         Jp1.add(btnAdd);
