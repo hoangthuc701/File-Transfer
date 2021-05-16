@@ -191,7 +191,7 @@ public class FileSeverTransferView extends JFrame{
             if (file.isFile()) {
                 String[] rows = {file.getName(), getFileSizeKiloBytes(file)};
                 model.addRow(rows);
-                files.add(file.getName());
+                files.add(file.getName() + "`" + file.getAbsolutePath());
             }
         }
         String srcData = sourcFolder + "/Data";

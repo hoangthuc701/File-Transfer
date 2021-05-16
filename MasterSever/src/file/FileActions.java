@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,7 +59,8 @@ public class FileActions {
             while ((line = br.readLine()) != null) {
                 String name = file.getName();
                 String[] fullname = name.split("\\$");
-                bw.write(line + "_" + fullname[0]);
+                System.out.println("FileAction: " + Arrays.toString(fullname));
+                bw.write(line + "`" + fullname[0]);
                 bw.newLine();
            }
         } catch (IOException e) {

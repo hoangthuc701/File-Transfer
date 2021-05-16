@@ -63,8 +63,8 @@ public class FileActions {
             line = br.readLine();
             while (line != null && !line.isEmpty()) {
                 System.out.println(line);
-                String [] rowitem = line.split("_");
-                RowTable rowTable = new RowTable(rowitem[0], rowitem[1], rowitem[2]);
+                String [] rowitem = line.split("`");
+                RowTable rowTable = new RowTable(rowitem[0], rowitem[1], rowitem[2], rowitem[3]);
                 al.add(rowTable);
                 line = br.readLine();
             }

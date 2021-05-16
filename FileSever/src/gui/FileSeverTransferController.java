@@ -112,7 +112,8 @@ public class FileSeverTransferController implements ActionListener {
             
             SocketActions.send("SEVER", dos);
             System.out.println(fileSever.getSocket().getPort());
-            String info = current_filer_server_hostname + "_" + String.valueOf(current_file_server_port);
+            String info = current_filer_server_hostname + "`" + String.valueOf(current_file_server_port) + "`" + sourcFolder;
+            System.out.println("Info: " + info);
             SocketActions.send(info, dos);
             SocketActions.sendFile(sourcFolder + "/Data/data.txt", oos);
         }
