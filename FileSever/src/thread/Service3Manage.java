@@ -15,16 +15,19 @@ import java.util.ArrayList;
 public class Service3Manage extends Thread {
 
 	private int _port;
+	private boolean isRunning= false;
+	private static DatagramSocket socket = null;
 
 	public Service3Manage(int port) {
 		this._port = port;
+		this.isRunning = true;
 	}
 
 	@Override
 	public void run() {
 		System.out.print("server is listening" + String.valueOf(this._port));
 		ArrayList<Service3> listConect = new ArrayList<>();
-		DatagramSocket socket = null;
+		
 		try {
 			socket = new DatagramSocket(this._port);
 		} catch (SocketException e1) {
@@ -73,8 +76,8 @@ public class Service3Manage extends Thread {
 	}
 
 	public void kill() {
-//		socket.close();
-//		isRunning = false;
+		socket.close();
+		isRunning = false;
 	}
 
 }

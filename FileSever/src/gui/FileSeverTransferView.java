@@ -30,6 +30,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -53,7 +54,7 @@ public class FileSeverTransferView extends JFrame{
     JTextField tfIp;
     JTextField tfPort;
     JButton btnConnect;
-    JTextArea taLog;
+    JTextPane taLog;
     public FileSeverTransferView(String srcDir){
         this.sourcFolder = srcDir;
         Container = new JPanel();
@@ -66,6 +67,7 @@ public class FileSeverTransferView extends JFrame{
         tfIp = new JTextField(10);
         tfPort = new JTextField(10);
         btnConnect = new JButton("Connect");
+        btnConnect.setActionCommand("CONNECT");
         
         JPanel jpLayout = new JPanel();
         JLabel jlIp = new JLabel("IP:");
@@ -109,9 +111,8 @@ public class FileSeverTransferView extends JFrame{
         Actions.add(Jp1, BorderLayout.LINE_END);
         
         Border border = tfIp.getBorder();
-        taLog = new JTextArea(10,20);
+        taLog = new JTextPane();
         taLog.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        
         
         Container.add(Title);
         Container.add(jpConnect);
@@ -137,6 +138,18 @@ public class FileSeverTransferView extends JFrame{
     }
     public JMenuItem getMenuItemDelete() {
         return Delete;
+    }
+    public JButton getBtnConnect() {
+    	return btnConnect;
+    }
+    public JTextField getFieldIP() {
+    	return tfIp;
+    }
+    public JTextField getFieldPort() {
+    	return tfPort;
+    }
+    public JTextPane getTextPaneLogs() {
+    	return taLog;
     }
     public void addFile(){
         JFileChooser fileChooser = new JFileChooser();
