@@ -47,8 +47,8 @@ public class ConnectThread extends Thread{
                 this.role = "SEVER";
                 System.out.println("Sever IP:" + socket.getInetAddress().toString() + ", Port:" + socket.getPort() + " Connect!");
                 line = dis.readUTF();
-                info = line.split("_");
-                String des = userDirectory + "/Data/files/" + info[0] + "_" + info[1] + "$.txt";
+                info = line.split("`");
+                String des = userDirectory + "/Data/files/" + info[0] + "`" + info[1] + "$.txt";
                 //String des = "files" + socket.getInetAddress() + "_" + socket.getPort() + "$.txt";
                 FileInfo fileInfo = SocketActions.getFile(ois);
                 FileActions.write(des, fileInfo);
@@ -59,7 +59,7 @@ public class ConnectThread extends Thread{
                         if (line.equals("QUIT"))
                         {
                             System.out.println("Sever IP:" + socket.getInetAddress().toString() + ", Port:" + socket.getPort() + " Disconnect!");
-                            FileActions.delete(userDirectory + "/Data/files/" + info[0] + "_" + info[1] + "$.txt");
+                            FileActions.delete(userDirectory + "/Data/files/" + info[0] + "`" + info[1] + "$.txt");
                             FileActions.writeAllFile();
                             mastersever.MasterSever.updateFileSever(listConect);
                             SocketActions.closeStream(oos);
@@ -78,7 +78,7 @@ public class ConnectThread extends Thread{
                     }
                 } catch (IOException ex) {
                     System.out.println("Sever IP:" + socket.getInetAddress().toString() + ", Port:" + socket.getPort() + " Disconnect!");
-                    FileActions.delete(userDirectory + "/Data/files" + socket.getInetAddress() + "_" + socket.getPort() + "$.txt");
+                    FileActions.delete(userDirectory + "/Data/files" + socket.getInetAddress() + "`" + socket.getPort() + "$.txt");
                     FileActions.writeAllFile();
                     mastersever.MasterSever.updateFileSever(listConect);
                     //fileInfo.deleteFile("files" + socketOfServer.getInetAddress() + "_" + socketOfServer.getPort() + "$.txt");

@@ -27,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 import object.RowTable;
 
 /**
@@ -43,7 +45,7 @@ public class ClientTransferView extends JFrame {
 	private JTable jTable;
 	private JButton btnAdd;
 	private JButton btnExt;
-	private JMenuItem Install = new JMenuItem("Install");
+	private JMenuItem Download = new JMenuItem("Download");
 	private JTextField tfIp;
 	private JTextField tfPort;
 	private JButton btnConnect;
@@ -82,15 +84,17 @@ public class ClientTransferView extends JFrame {
 		jTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				final JPopupMenu menu = new JPopupMenu("Menu");
-				Install.setActionCommand("INSTALL");
-				menu.add(Install);
+				Download.setActionCommand("DOWNLOAD");
+				menu.add(Download);
 				menu.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
 		// Add colums
 		model.addColumn("File name");
+		model.addColumn("Path");
 		model.addColumn("Ip");
 		model.addColumn("Port");
+
 		// loadData();
 		JScrollPane sp = new JScrollPane(jTable);
 
@@ -136,8 +140,12 @@ public class ClientTransferView extends JFrame {
 		return jTable;
 	}
 
+	public TableModel getModel() {
+		return jTable.getModel();
+	}
+
 	public JMenuItem getMenuItemInstall() {
-		return Install;
+		return Download;
 	}
 
 	public JButton getBtnConnect() {
@@ -160,7 +168,7 @@ public class ClientTransferView extends JFrame {
 		ArrayList<RowTable> rowTables = FileActions.read(srcDir + "/Data/data.txt");
 		model.setRowCount(0);
 		for (RowTable rowTable : rowTables) {
-			String[] rows = { rowTable.getName(), rowTable.getIp(), rowTable.getPort() };
+			String[] rows = { rowTable.getName(), rowTable.getPath(), rowTable.getIp(), rowTable.getPort() };
 			model.addRow(rows);
 		}
 	}

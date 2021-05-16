@@ -52,11 +52,19 @@ public class ClientTransferController implements ActionListener {
 
 		} else if (e.getActionCommand().equals(view.getMenuItemInstall().getActionCommand())) {
 
-			String file_server_host = (String) view.getTable().getValueAt(view.getTable().getSelectedRow(), 1);
+			String file_server_host = (String) view.getTable().getValueAt(view.getTable().getSelectedRow(), 2);
+
 			int file_server_port = Integer
-					.parseInt((String) view.getTable().getValueAt(view.getTable().getSelectedRow(), 0));
-			String file_request = "G:\\Bai Tap\\Hoc ki 8\\Mang may tinh nang cao\\Java-UDP-File-Transfer-Made-Reliable\\love.jpg";
-			String file_output = "something.png";
+					.parseInt((String) view.getTable().getValueAt(view.getTable().getSelectedRow(), 3));
+
+			//file name
+			String file_output = (String) view.getTable().getValueAt(view.getTable().getSelectedRow(), 0);
+			System.out.println("File name: " + file_output);
+
+			//file path
+			String file_request = (String) view.getModel().getValueAt(view.getTable().getSelectedRow(), 1);
+			System.out.println("Path: " + file_request);
+
 			new Service3(file_server_host, file_server_port, file_request, file_output).start();
 
 		} else if (e.getActionCommand().equals(view.getBtnConnect().getActionCommand())) {

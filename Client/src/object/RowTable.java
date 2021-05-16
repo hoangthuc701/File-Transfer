@@ -12,16 +12,19 @@ package object;
  */
 public class RowTable {
     private String name;
+    private String path;
     private String ip;
     private String port;
-    public RowTable(String name, String ip, String port){
+    public RowTable(String name, String path, String ip, String port){
         this.name = name;
+        this.path = path;
         this.ip = ip;
         this.port = port;
     }
     public String getName(){
         return name;
     }
+    public String getPath(){ return path; }
     public String getIp(){
         return ip;
     }
