@@ -5,13 +5,9 @@
  */
 package gui;
 
-import filesever.SocketActions;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
@@ -43,7 +39,11 @@ import javax.swing.table.DefaultTableModel;
  * @author Sang
  */
 public class FileSeverTransferView extends JFrame{
-    private JPanel Container;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel Container;
     private DefaultTableModel model;
     private JTable jTable;
     private JButton btnAdd;
