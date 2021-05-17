@@ -23,14 +23,8 @@ public class FileSever {
     public Socket getSocket() {
         return socket;
     }
-    public void connectServer() {
-        try {
+    public void connectServer() throws UnknownHostException, IOException {
             socket = new Socket(host, port);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     public void closeSocket() {
        try {
