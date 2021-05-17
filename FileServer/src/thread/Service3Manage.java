@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Service3Manage extends Thread {
 
 	private int _port;
-	private boolean isRunning= false;
+	private boolean isRunning= true;
 	private static DatagramSocket socket = null;
 
 	public Service3Manage(int port) {
@@ -35,7 +35,7 @@ public class Service3Manage extends Thread {
 			e1.printStackTrace();
 		}
 		
-		while (true) {
+		while (true && this.isRunning) {
 			String savedFileName = "";
 			int client_port = 0;
 			String client_host_name = "127.0.0.1";
@@ -59,6 +59,10 @@ public class Service3Manage extends Thread {
 				byte[] receivePort = new byte[1024];
 				DatagramPacket receivePortPacket = new DatagramPacket(receivePort, receivePort.length);
 				socket.receive(receivePortPacket);
+				
+				if (savedFileName.length()==0) {
+					continue;
+				}
 
 				try {
 					client_port = Integer.parseInt((new String(receivePort, "UTF-8").trim()));
@@ -77,7 +81,7 @@ public class Service3Manage extends Thread {
 
 	public void kill() {
 		socket.close();
-		isRunning = false;
+		this.isRunning = false;
 	}
 
 }

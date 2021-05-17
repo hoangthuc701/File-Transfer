@@ -15,10 +15,14 @@ import client.SocketActions;
 
 import java.io.IOException;
 import java.net.Socket;
+
+import javax.swing.JOptionPane;
+
 import file.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import thread.*;
+import util.PrintFactory;
 
 public class ClientTransferController implements ActionListener {
 	private ClientTransferView view;
@@ -47,8 +51,10 @@ public class ClientTransferController implements ActionListener {
 			SocketActions.closeStream(ois);
 			SocketActions.closeStream(dos);
 			SocketActions.closeStream(dis);
-			listenFromMasterServer.interrupt();
-			client.closeSocket();
+			if (listenFromMasterServer != null) {
+				listenFromMasterServer.interrupt();
+				client.closeSocket();
+			}
 
 		} else if (e.getActionCommand().equals(view.getMenuItemInstall().getActionCommand())) {
 
@@ -57,11 +63,11 @@ public class ClientTransferController implements ActionListener {
 			int file_server_port = Integer
 					.parseInt((String) view.getTable().getValueAt(view.getTable().getSelectedRow(), 3));
 
-			//file name
+			// file name
 			String file_output = (String) view.getTable().getValueAt(view.getTable().getSelectedRow(), 0);
 			System.out.println("File name: " + file_output);
 
-			//file path
+			// file path
 			String file_request = (String) view.getModel().getValueAt(view.getTable().getSelectedRow(), 1);
 			System.out.println("Path: " + file_request);
 
@@ -83,13 +89,40 @@ public class ClientTransferController implements ActionListener {
 				return;
 			}
 
+			// validate input data
+			if (view.getFieldIP().getText().length() <= 0 || view.getFieldPort().getText().length() <= 0) {
+				JOptionPane.showMessageDialog(null, "Please input all field.");
+				return;
+			}
+
 			String hostname_master_server = view.getFieldIP().getText();
-			int port_master_server = Integer.parseInt(view.getFieldPort().getText());
+			int port_master_server;
+			try {
+				port_master_server = Integer.parseInt(view.getFieldPort().getText());
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "Invalid port.");
+				return;
+			}
 
 			listenFromMasterServer = new Thread() {
 				public void run() {
 					client = new Client(hostname_master_server, port_master_server);
-					client.connectServer();
+					try {
+						client.connectServer();
+						Thread updateScreen = new Thread() {
+							public void run() {
+								view.getFieldIP().setEnabled(false);
+								view.getFieldPort().setEnabled(false);
+								view.getBtnConnect().setText("Disconnect");
+							}
+						};
+						updateScreen.start();
+					} catch (IOException e) {
+						PrintFactory.writeError(view.getTextPaneLogs(), "Cann't connect to Master Server");
+						return;
+					}
+					PrintFactory.writeLogs(view.getTextPaneLogs(), "Connect to Master Server success.");
+
 					Socket socket = client.getSocket();
 					try {
 						dis = new DataInputStream(socket.getInputStream());
@@ -121,10 +154,6 @@ public class ClientTransferController implements ActionListener {
 			};
 
 			listenFromMasterServer.start();
-
-			view.getFieldIP().setEnabled(false);
-			view.getFieldPort().setEnabled(false);
-			view.getBtnConnect().setText("Disconnect");
 		}
 	}
 }
