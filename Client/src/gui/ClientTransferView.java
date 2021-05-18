@@ -94,6 +94,10 @@ public class ClientTransferView extends JFrame {
 		model.addColumn("Ip");
 		model.addColumn("Port");
 
+		// hide
+		jTable.getColumnModel().getColumn(1).setMinWidth(0);
+		jTable.getColumnModel().getColumn(1).setMaxWidth(0);
+
 		// loadData();
 		JScrollPane sp = new JScrollPane(jTable);
 
