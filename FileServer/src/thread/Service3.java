@@ -105,7 +105,7 @@ public class Service3 extends Thread {
 
 			if (!flag) {
 				System.arraycopy(fileByteArray, i, message, 3, 1021);
-			} else { // If it is the last message
+			} else {
 				System.arraycopy(fileByteArray, i, message, 3, fileByteArray.length - i);
 			}
 
@@ -125,7 +125,7 @@ public class Service3 extends Thread {
 
 			System.out.println("Sent: Sequence number = " + sequenceNumber);
 
-			// For verifying the the packet
+			// For verifying the packet
 			boolean ackRec;
 
 			// The acknowledgment is not correct
