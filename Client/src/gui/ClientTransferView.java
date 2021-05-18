@@ -109,13 +109,15 @@ public class ClientTransferView extends JFrame {
 
 		Border border = tfIp.getBorder();
 		taLog = new JTextPane();
-		taLog.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+                taLog.setPreferredSize( new Dimension( 450, 200 ) );
+                taLog.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+                JScrollPane scroll = new JScrollPane(taLog);
 
 		Container.add(Title);
 		Container.add(jpConnect);
 		Container.add(sp);
 		Container.add(Actions);
-		Container.add(taLog);
+		Container.add(scroll);
 		Container.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		add(Container);
